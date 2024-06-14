@@ -26,7 +26,7 @@
 <!-- TABLE OF CONTENTS -->
 
 <details>
-  <summary>Table of Contents</summary>
+  <summary>Conract address: 0x534382D1e75fDcc1e9B65A9b5C749d48560f89Bc</summary>
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>

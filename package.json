@@ -6,7 +6,7 @@
     "author": "Celo",
     "license": "MIT",
     "scripts": {
-        "react-app:dev": "yarn workspace @MiniTest/react-app dev",
+        "dev": "yarn workspace @MiniTest/react-app dev",
         "react-app:build": "yarn workspace @MiniTest/react-app build",
         "react-app:start": "yarn workspace @MiniTest/react-app start",
         "react-app:lint": "yarn workspace @MiniTest/react-app lint",
