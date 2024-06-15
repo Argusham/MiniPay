@@ -55,13 +55,13 @@ export default function Home() {
     const [balance, setBalance] = useState<string>("");
 
     useEffect(() => {
-        getUserAddress().then(async () => {
-           if (address) {
-                const userBalance = await getBalance(address);
-                setBalance(userBalance);
-            }
+        // getUserAddress().then(async () => {
+        //    if (address) {
+        //         const userBalance = await getBalance(address);
+        //         setBalance(userBalance);
+        //     }
          
-        });
+        // });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address]);
 
