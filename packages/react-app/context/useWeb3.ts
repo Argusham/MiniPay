@@ -69,7 +69,7 @@ export const useWeb3 = () => {
         const StableTokenContract = getContract({
             address: cUSDTokenAddress,
             abi: stableTokenABI,
-            client: publicClient,
+            publicClient,
         });
 
         const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([address]);
