@@ -1,11 +1,15 @@
 import { useState } from "react";
-import StableTokenABI from "./cusd-abi.json";
+// import StableTokenABI from "./cusd-abi.json";
+const { stableTokenABI } = require("@celo/abis");
 import {
     createPublicClient,
     createWalletClient,
     custom,
     http,
     parseEther,
+    getContract,
+    formatEther,
+    parseUnits,
 } from "viem";
 import { celoAlfajores } from "viem/chains";
 
@@ -32,6 +36,9 @@ export const useWeb3 = () => {
         }
     };
 
+
+  
+
     const sendCUSD = async (to: string, amount: string) => {
         let walletClient = createWalletClient({
             transport: custom(window.ethereum),
@@ -44,7 +51,7 @@ export const useWeb3 = () => {
 
         const tx = await walletClient.writeContract({
             address: cUSDTokenAddress,
-            abi: StableTokenABI.abi,
+            abi: stableTokenABI,
             functionName: "transfer",
             account: address,
             args: [to, amountInWei],
@@ -57,11 +64,27 @@ export const useWeb3 = () => {
         return receipt;
     };
 
+    
+    const getBalance = async (address: string) => {
+        const StableTokenContract = getContract({
+            address: cUSDTokenAddress,
+            abi: stableTokenABI,
+            client: publicClient,
+        });
+
+        const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([address]);
+
+        const balanceInWei = balanceInBigNumber.toString();
+        const balanceInCUSD = formatEther(balanceInWei);
+
+        return balanceInCUSD;
+    };
    
 
     return {
         address,
         getUserAddress,
         sendCUSD,
+        getBalance
     };
 };
