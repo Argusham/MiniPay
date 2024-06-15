@@ -8,8 +8,7 @@ import {
     http,
     parseEther,
     getContract,
-    formatEther,
-    parseUnits,
+    formatEther
 } from "viem";
 import { celoAlfajores } from "viem/chains";
 
