@@ -72,8 +72,8 @@ export default function Home() {
                 const tx = await sendCUSD(recipient, amount);
                 console.log(tx);
                 setTx(tx);
-                const userBalance = await getBalance(address!);
-                setBalance(userBalance);
+                // const userBalance = await getBalance(address!);
+                // setBalance(userBalance);
             } catch (error) {
                 console.log(error);
             } finally {
