@@ -1,6 +1,6 @@
 import { useState } from "react";
-import StableTokenABI from "./cusd-abi.json";
-// const { stableTokenABI } = require("@celo/abis");
+// import StableTokenABI from "./cusd-abi.json";
+const { stableTokenABI } = require("@celo/abis");
 import {
     createPublicClient,
     createWalletClient,
@@ -50,7 +50,7 @@ export const useWeb3 = () => {
 
         const tx = await walletClient.writeContract({
             address: cUSDTokenAddress,
-            abi: StableTokenABI.abi,
+            abi: stableTokenABI,
             functionName: "transfer",
             account: address,
             args: [to, amountInWei],
@@ -64,26 +64,26 @@ export const useWeb3 = () => {
     };
 
     
-    // const getBalance = async (address: string) => {
-    //     const StableTokenContract = getContract({
-    //         address: cUSDTokenAddress,
-    //         abi: stableTokenABI,
-    //         publicClient,
-    //     });
+    const getBalance = async (address: string) => {
+        const StableTokenContract = getContract({
+            address: cUSDTokenAddress,
+            abi: stableTokenABI,
+            client: publicClient,
+        });
 
-    //     const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([address]);
+        const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([address]);
 
-    //     const balanceInWei = balanceInBigNumber.toString();
-    //     const balanceInCUSD = formatEther(balanceInWei);
+        const balanceInWei = balanceInBigNumber.toString();
+        const balanceInCUSD = formatEther(balanceInWei);
 
-    //     return balanceInCUSD;
-    // };
+        return balanceInCUSD;
+    };
    
 
     return {
         address,
         getUserAddress,
         sendCUSD,
-        // getBalance
+        getBalance
     };
 };

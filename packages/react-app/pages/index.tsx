@@ -46,7 +46,7 @@ export default function Home() {
         address,
         getUserAddress,
         sendCUSD,
-        // getBalance
+        getBalance
     } = useWeb3();
     const [signingLoading, setSigningLoading] = useState(false);
     const [tx, setTx] = useState<any>(undefined);
@@ -55,13 +55,13 @@ export default function Home() {
     const [balance, setBalance] = useState<string>("");
 
     useEffect(() => {
-        // getUserAddress().then(async () => {
-        //    if (address) {
-        //         const userBalance = await getBalance(address);
-        //         setBalance(userBalance);
-        //     }
+        getUserAddress().then(async () => {
+           if (address) {
+                const userBalance = await getBalance(address);
+                setBalance(userBalance);
+            }
          
-        // });
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address]);
 
@@ -72,8 +72,8 @@ export default function Home() {
                 const tx = await sendCUSD(recipient, amount);
                 console.log(tx);
                 setTx(tx);
-                // const userBalance = await getBalance(address!);
-                // setBalance(userBalance);
+                const userBalance = await getBalance(address!);
+                setBalance(userBalance);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -133,7 +133,7 @@ export default function Home() {
                             widthFull
                         />
                     </div>
-                    {/* <div className="w-full px-3 mt-4">
+                    <div className="w-full px-3 mt-4">
                         <div className="text-center">
                             <div className="font-bold">Recipient:</div>
                             <div>{recipient}</div>
@@ -142,7 +142,7 @@ export default function Home() {
                             <div className="font-bold">Amount:</div>
                             <div>{amount} cUSD</div>
                         </div>
-                    </div> */}
+                    </div>
 
 
                 </>
