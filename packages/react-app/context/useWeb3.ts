@@ -35,9 +35,6 @@ export const useWeb3 = () => {
         }
     };
 
-
-  
-
     const sendCUSD = async (to: string, amount: string) => {
         let walletClient = createWalletClient({
             transport: custom(window.ethereum),
@@ -78,12 +75,18 @@ export const useWeb3 = () => {
 
         return balanceInCUSD;
     };
-   
+
+    const checkIfTransactionSucceeded = async (transactionHash: any) => {
+        const receipt = await publicClient.getTransactionReceipt({ hash: transactionHash});
+        return receipt.status === "success";
+    };
+ 
 
     return {
         address,
         getUserAddress,
         sendCUSD,
-        getBalance
+        getBalance,
+        checkIfTransactionSucceeded,
     };
 };
