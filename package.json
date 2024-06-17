@@ -28,5 +28,9 @@
     "keywords": [
         "celo-composer",
         "celo"
-    ]
+    ],
+    "dependencies": {
+        "@celo/abis": "^11.0.0",
+        "@celo/identity": "^5.1.2"
+    }
 }
