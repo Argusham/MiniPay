@@ -1,6 +1,7 @@
 import { useState } from "react";
-import StableTokenABI from "./cusd-abi.json";
+// import StableTokenABI from "./cusd-abi.json";
 // const { stableTokenABI } = require("@celo/abis");
+import { stableTokenABI } from "@celo/abis";
 import {
     createPublicClient,
     createWalletClient,
@@ -35,7 +36,7 @@ export const useWeb3 = () => {
         }
     };
 
-    const sendCUSD = async (to: string, amount: string) => {
+    const sendCUSD = async (to: any, amount: string) => {
         let walletClient = createWalletClient({
             transport: custom(window.ethereum),
             chain: celoAlfajores,
@@ -47,7 +48,7 @@ export const useWeb3 = () => {
 
         const tx = await walletClient.writeContract({
             address: cUSDTokenAddress,
-            abi: StableTokenABI.abi,
+            abi: stableTokenABI,
             functionName: "transfer",
             account: address,
             args: [to, amountInWei],
@@ -61,10 +62,10 @@ export const useWeb3 = () => {
     };
 
     
-    const getBalance = async (address: string) => {
+    const getBalance = async (address: any) => {
         const StableTokenContract = getContract({
             address: cUSDTokenAddress,
-            abi: StableTokenABI.abi,
+            abi: stableTokenABI,
             client: publicClient,
         });
 
