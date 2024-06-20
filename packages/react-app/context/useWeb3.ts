@@ -1,16 +1,6 @@
 import { useState } from "react";
-// import StableTokenABI from "./cusd-abi.json";
-// const { stableTokenABI } = require("@celo/abis");
 import { stableTokenABI } from "@celo/abis";
-import {
-    createPublicClient,
-    createWalletClient,
-    custom,
-    http,
-    parseEther,
-    getContract,
-    formatEther
-} from "viem";
+import {createPublicClient,createWalletClient,custom,http,parseEther,getContract,formatEther} from "viem";
 import { celoAlfajores } from "viem/chains";
 
 const publicClient = createPublicClient({
@@ -19,7 +9,6 @@ const publicClient = createPublicClient({
 });
 
 const cUSDTokenAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"; // Testnet
-
 
 export const useWeb3 = () => {
     const [address, setAddress] = useState<string | null>(null);
@@ -69,9 +58,10 @@ export const useWeb3 = () => {
             client: publicClient,
         });
 
-        const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([address]);
+        const balanceInBigNumber: bigint = await StableTokenContract.read.balanceOf([address]);
+        // const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([`0x${address.replace(/^0x/, '')}`]);
 
-        const balanceInWei = balanceInBigNumber.toString();
+        const balanceInWei = balanceInBigNumber;
         const balanceInCUSD = formatEther(balanceInWei);
 
         return balanceInCUSD;
@@ -81,7 +71,31 @@ export const useWeb3 = () => {
         const receipt = await publicClient.getTransactionReceipt({ hash: transactionHash});
         return receipt.status === "success";
     };
+
  
+    const estimateGas = async (transaction: any, feeCurrency = "") => {
+        const params: any = { ...transaction };
+        if (feeCurrency) {
+            params.feeCurrency = `0x${feeCurrency.replace(/^0x/, '')}`;
+        }
+        return await publicClient.estimateGas(params);
+    };
+
+    // const estimateGasPrice = async (feeCurrency = "") => {
+    //     const params = feeCurrency ? [`0x${feeCurrency.replace(/^0x/, '')}`] : undefined;
+    //     return await publicClient.request({
+    //         method: "eth_gasPrice",
+    //         client: params,
+    //     });
+    // };
+
+    const estimateGasPrice = async (feeCurrency = ""): Promise<string> => {
+        const params = feeCurrency ? [`0x${feeCurrency.replace(/^0x/, '')}`] : [];
+        return await publicClient.request({
+            method: "eth_gasPrice",
+            params: params as any,
+        });
+    };
 
     return {
         address,
@@ -89,5 +103,7 @@ export const useWeb3 = () => {
         sendCUSD,
         getBalance,
         checkIfTransactionSucceeded,
+        estimateGas,
+        estimateGasPrice
     };
 };

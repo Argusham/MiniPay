@@ -20,10 +20,10 @@ function PrimaryButton({
       onClick={onClick}
       disabled={disabled ?? loading}
       className={`${
-        widthFull ? "w-full" : "px-4"
-      } ${className} font-bold bg-indigo-500 rounded-2xl text-white py-3 flex justify-center items-center`}
+        widthFull ? "w-60" : "px-4"
+      } ${className} font-bold bg-yellow-500 rounded-2xl text-white py-3 flex justify-center items-center`}
     >
-      {loading ? <>Loading...</> : title}
+      {loading ? <>Loading...😶‍🌫️</> : title}
     </button>
   );
 }
