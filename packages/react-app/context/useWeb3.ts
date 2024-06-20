@@ -58,8 +58,8 @@ export const useWeb3 = () => {
             client: publicClient,
         });
 
-        const balanceInBigNumber: bigint = await StableTokenContract.read.balanceOf([address]);
-        // const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([`0x${address.replace(/^0x/, '')}`]);
+        const balanceInBigNumber: any = await StableTokenContract.read.balanceOf([address]);
+        
 
         const balanceInWei = balanceInBigNumber;
         const balanceInCUSD = formatEther(balanceInWei);
